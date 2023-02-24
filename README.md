@@ -1,2 +1,2 @@
 # ma-com-rn
-Mobile Arts Lab Communication  - React Native
+Mobile Arts Lab Communicator  - React Native

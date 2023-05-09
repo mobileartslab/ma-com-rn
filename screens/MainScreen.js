@@ -1,20 +1,44 @@
-import {
-    Image,
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    TextInput,
-    Button,
-} from 'react-native'
+import React, { useState } from 'react'
+import {Image, StyleSheet, Text, View, SafeAreaView, TextInput, Button, FlatList,} from 'react-native'
 import Images from '../assets/images'
 
+const nick = { id: 1, name: 'nick', avatar: ''}
+const jack = { id: 2, name: 'jack', avatar: ''}
+const senderId = 2
+const messageData = [
+  { id: 1, content: 'The big three killed my baby, No money in my hand again', senderId: 2, recipientId: 1 },
+  { id: 2, content: 'Ah, icky thump, who\'da thunk? Sittin\' drunk on a wagon to Mexico', senderId: 1, recipientId: 2 },
+  { id: 3, content: 'The big three killed my baby, Nobody\'s comin\' home again', senderId: 2, recipientId: 1 },
+  { id: 4, content: 'Why don\'t you take the day off and try to repair? A billion others don\'t seem to care Better ideas are stuck in the mud', senderId: 2, recipientId: 1 },
+  { id: 5, content: 'Left alone, I hit myself with a stone Went home and learned how to clean up after myself', senderId: 2, recipientId: 1 },
+  { id: 6, content: 'And my baby\'s my common sense So don\'t feed me planned obsolescence', senderId: 1, recipientId: 2 },
+]
+
+
+const Message = ({ message }) => {
+  const { id, content, recipientId } = message;
+  return (
+    <View style={senderId == message.senderId ? styles.messageSender : styles.messageRecipient}>
+      <Text style={senderId == message.senderId ? styles.messageSenderText : styles.messageRecipientText}>{content}</Text>
+    </View>
+  );
+};
+
 export default function MainScreen() {
+  const [messages, setMessages] = useState(messageData)
     return (
      <SafeAreaView style={styles.container}>
        <View style={styles.innerContainer}>
          <Text style={styles.title}>Jack White</Text>
            <View style={styles.messageList}>
+             <FlatList
+               style={styles.messages}
+               data={messages}
+               renderItem={({ item }) => (
+                 <Message message={item} />
+               )}
+               keyExtractor={(item) => item.id}
+             />
            </View>
            <View style={styles.footer}>
              <TextInput
@@ -49,6 +73,7 @@ const styles = StyleSheet.create({
     width: '90%',
     flex: 1,
     marginVertical: 20,
+    padding: 20,
     borderRadius: 10
   },
   footer: {
@@ -75,5 +100,33 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sendButton: {
+  },
+  messageSender: {
+    backgroundColor: '#F2F2F7',
+    width: '100%',
+    padding: 12,
+    marginBottom: 20,
+    borderRadius: 8,
+  },
+  messageRecipient: {
+    backgroundColor: '#3478F6',
+    width: '100%',
+    padding: 12,
+    marginBottom: 20,
+    borderRadius: 8,
+  },
+  messageSenderText: {
+    fontSize: 18,
+    lineHeight: 22
+  },
+  messageRecipientText: {
+    color: 'white',
+    fontSize: 18,
+    lineHeight: 22
+  },
+  messages: {
+    flex: 1
   }
+
+
 });

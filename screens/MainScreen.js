@@ -28,8 +28,11 @@ export default function MainScreen() {
   const [messages, setMessages] = useState(messageData)
     return (
      <SafeAreaView style={styles.container}>
+         <View style={styles.header}>
+           <Image source={Images.senderAvatar} style={styles.avatar} />
+           <Text style={styles.title}>Jack White</Text>
+         </View>
        <View style={styles.innerContainer}>
-         <Text style={styles.title}>Jack White</Text>
            <View style={styles.messageList}>
              <FlatList
                style={styles.messages}
@@ -59,14 +62,13 @@ export default function MainScreen() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
-    alignItems: 'center',
     flex: 1
   },
   innerContainer: {
     backgroundColor: '#F2F2F7',
     alignItems: 'center',
     width: '100%',
-    height: '100%',
+    flex: 1
   },
   messageList: {
     backgroundColor: '#ffffff',
@@ -126,6 +128,18 @@ const styles = StyleSheet.create({
   },
   messages: {
     flex: 1
+  },
+  avatar: {
+    height: 60,
+    width: 60,
+    borderRadius: 30
+  },
+  header: {
+    flexDirection: "row",
+    backgroundColor: '#F2F2F7',
+    paddingTop: 15,
+    paddingLeft: 30,
+    gap: 15
   }
 
 

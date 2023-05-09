@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import {Image, StyleSheet, Text, View, SafeAreaView, TextInput, Button, FlatList,} from 'react-native'
 import Images from '../assets/images'
 
@@ -26,6 +26,19 @@ const Message = ({ message }) => {
 
 export default function MainScreen() {
   const [messages, setMessages] = useState(messageData)
+  const [message, setMessage] = useState('')
+  const flatlistRef = useRef();
+
+  const addMessage = () => {
+    if (message.length > 0) {
+      const newMessage = {id: messages.length + 1, content: message, senderId: 1, recipientId: 2}
+      const newMessages = messages
+      newMessages[messages.length] = newMessage
+      setMessages(newMessages)
+      setMessage('')
+    }
+  }
+
     return (
      <SafeAreaView style={styles.container}>
          <View style={styles.header}>
@@ -35,22 +48,27 @@ export default function MainScreen() {
        <View style={styles.innerContainer}>
            <View style={styles.messageList}>
              <FlatList
+               ref={flatlistRef}
                style={styles.messages}
                data={messages}
                renderItem={({ item }) => (
                  <Message message={item} />
                )}
                keyExtractor={(item) => item.id}
+               onContentSizeChange={()=> flatlistRef.current.scrollToEnd()}
              />
            </View>
            <View style={styles.footer}>
              <TextInput
                placeholder="Message..."
                style={styles.messageInput}
+               value={message}
+               onChangeText={(text) => setMessage(text)}
              />
              <Button
                title="Send"
                style={styles.sendButton}
+               onPress={addMessage}
              />
            </View>
 

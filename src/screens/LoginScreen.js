@@ -8,11 +8,17 @@ import {
     TextInput,
     Button
 } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons'
 import Images from '../../assets/images'
 import * as ValidationConstants from '../constants/validation'
+import {LOGIN} from "../state/action_types";
+import {action} from "../state/actions";
 
 export default function LoginScreen({ navigation }) {
+
+  const dispatch = useDispatch()
+  const app = useSelector((state) => state.app)
 
   const fieldsType = {
     email: '',
@@ -80,6 +86,7 @@ export default function LoginScreen({ navigation }) {
     if (!validate()) {
       return
     }
+    dispatch(action({ type: LOGIN, data: { username: fields.email, password: fields.password } }))
     navigation.navigate('Main')
   }
 
@@ -94,6 +101,7 @@ export default function LoginScreen({ navigation }) {
            style={styles.input}
            placeholder="username"
            value={fields.username}
+           autoCapitalize="none"
            onChangeText={(text) => handleFieldChange('email', text)}
          />
          {errors.email && (
@@ -160,8 +168,8 @@ const styles = StyleSheet.create({
         height: 30
     },
     errorRow: {
-      flexDirection: 'column',
-      marginLeft: 1,
-      alignItems: 'center'
+      width: 250,
+      flexDirection: 'row',
+      gap: 10,
     }
 });

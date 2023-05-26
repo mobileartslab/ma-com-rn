@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import {Image, StyleSheet, Text, View, SafeAreaView, TextInput, Button, FlatList,} from 'react-native'
-import Images from '../assets/images'
+import Images from '../../assets/images'
 
 const nick = { id: 1, name: 'nick', avatar: ''}
 const jack = { id: 2, name: 'jack', avatar: ''}

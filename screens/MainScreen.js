@@ -25,6 +25,8 @@ const Message = ({ message }) => {
 };
 
 export default function MainScreen() {
+
+
   const [messages, setMessages] = useState(messageData)
   const [message, setMessage] = useState('')
   const flatlistRef = useRef();
@@ -162,3 +164,10 @@ const styles = StyleSheet.create({
 
 
 });
+
+MainScreen.navigationOptions = {
+  headerTitle: 'Trucks Screen',
+  headerLeft: () => {
+    return null;
+  },
+};

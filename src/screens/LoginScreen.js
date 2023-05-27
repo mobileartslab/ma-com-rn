@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     Image,
     StyleSheet,
@@ -12,12 +12,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons'
 import Images from '../../assets/images'
 import * as ValidationConstants from '../constants/validation'
-import {LOGIN} from "../state/action_types";
+import {INIT, LOGIN} from "../state/action_types";
 import {action} from "../state/actions";
 
 export default function LoginScreen({ navigation }) {
 
   const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(action({ type: INIT }))
+  }, [])
+
   const app = useSelector((state) => state.app)
 
   const fieldsType = {

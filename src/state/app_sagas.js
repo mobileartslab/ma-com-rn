@@ -12,6 +12,6 @@ export const login = function* (action) {
     yield put(actionError(error, type))
   }
 }
-export const watchGetScreen = function* () {
+export const watchLogin = function* () {
   yield takeLatest(LOGIN, login)
 }

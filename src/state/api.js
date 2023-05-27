@@ -8,3 +8,4 @@ class API {
     return data
   }
 }
+export default API

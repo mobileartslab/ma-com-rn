@@ -14,15 +14,23 @@ import Images from '../../assets/images'
 import * as ValidationConstants from '../constants/validation'
 import {INIT, LOGIN} from "../state/action_types";
 import {action} from "../state/actions";
+import {STATUS_ACTIVE, STATUS_AUTHENTICATED} from "../constants/constants";
 
 export default function LoginScreen({ navigation }) {
+  const app = useSelector((state) => state.app)
 
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(action({ type: INIT }))
   }, [])
 
-  const app = useSelector((state) => state.app)
+  useEffect(() => {
+    console.log('CHECKING user.authStatus')
+    if (app?.user?.authStatus === STATUS_AUTHENTICATED) {
+      navigation.navigate('Main')
+    }
+  }, [app.user])
+
 
   const fieldsType = {
     email: '',
@@ -91,7 +99,7 @@ export default function LoginScreen({ navigation }) {
       return
     }
     dispatch(action({ type: LOGIN, data: { username: fields.email, password: fields.password } }))
-    navigation.navigate('Main')
+    // navigation.navigate('Main')
   }
 
 

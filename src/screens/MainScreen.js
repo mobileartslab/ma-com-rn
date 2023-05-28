@@ -1,6 +1,9 @@
-import React, { useState, useRef } from 'react'
+import React, {useState, useRef, useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {Image, StyleSheet, Text, View, SafeAreaView, TextInput, Button, FlatList,} from 'react-native'
-import Images from '../assets/images'
+import Images from '../../assets/images'
+import {action} from "../state/actions";
+import {INIT} from "../state/action_types";
 
 const nick = { id: 1, name: 'nick', avatar: ''}
 const jack = { id: 2, name: 'jack', avatar: ''}
@@ -25,6 +28,11 @@ const Message = ({ message }) => {
 };
 
 export default function MainScreen() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(action({ type: INIT }))
+  }, [])
+
   const [messages, setMessages] = useState(messageData)
   const [message, setMessage] = useState('')
   const flatlistRef = useRef();
@@ -162,3 +170,9 @@ const styles = StyleSheet.create({
 
 
 });
+
+MainScreen.navigationOptions = {
+  headerLeft: () => {
+    return null;
+  },
+};

@@ -2,7 +2,7 @@ import {STATUS_ACTIVE, STATUS_NOT_FOUND, SUCCESS} from '../constants/constants'
 import { INIT, LOGIN } from './action_types'
 
 const INITIAL_STATE = {
-  user: { authStatus: STATUS_NOT_FOUND }
+  user: {}
 }
 
 export default function (state = INITIAL_STATE, action) {

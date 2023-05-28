@@ -172,7 +172,6 @@ const styles = StyleSheet.create({
 });
 
 MainScreen.navigationOptions = {
-  headerTitle: 'Trucks Screen',
   headerLeft: () => {
     return null;
   },

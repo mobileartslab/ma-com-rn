@@ -1,33 +1,33 @@
 import React, {useEffect, useState} from 'react'
-import {
-    Image,
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    TextInput,
-    Button
-} from 'react-native'
+import {Image, StyleSheet, Text, View, SafeAreaView, TextInput, Button} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons'
 import Images from '../../assets/images'
 import * as ValidationConstants from '../constants/validation'
 import {INIT, LOGIN} from "../state/action_types";
 import {action} from "../state/actions";
-import {STATUS_ACTIVE, STATUS_AUTHENTICATED} from "../constants/constants";
+import {STATUS_ACTIVE, STATUS_AUTHENTICATED, STATUS_NOT_FOUND} from "../constants/constants";
 
 export default function LoginScreen({ navigation }) {
   const app = useSelector((state) => state.app)
 
   const dispatch = useDispatch()
   useEffect(() => {
+    resetErrors()
+    resetFields()
     dispatch(action({ type: INIT }))
   }, [])
 
   useEffect(() => {
-    console.log('CHECKING user.authStatus')
-    if (app?.user?.authStatus === STATUS_AUTHENTICATED) {
+    const status = app?.user?.authStatus
+    console.log('CHECKING user.authStatus', status)
+    if (status === STATUS_AUTHENTICATED) {
       navigation.navigate('Main')
+    }
+    else if (status === STATUS_NOT_FOUND) {
+      errors.submit = 'Invalid Login'
+      const newErrors = errors
+      setErrors({ ...errors, ...newErrors })
     }
   }, [app.user])
 
@@ -94,12 +94,12 @@ export default function LoginScreen({ navigation }) {
     return isValid
   }
 
+
   const handleSubmit = () => {
     if (!validate()) {
       return
     }
     dispatch(action({ type: LOGIN, data: { username: fields.email, password: fields.password } }))
-    // navigation.navigate('Main')
   }
 
 
@@ -136,7 +136,7 @@ export default function LoginScreen({ navigation }) {
          <View style={styles.spacer20} />
          <Button title="Log In" onPress={handleSubmit} />
          {errors.submit && (
-           <View style={styles.errorRow}>
+           <View style={styles.submitErrorRow}>
              <AntDesign name="exclamationcircle" size={16} color="red"/>
              <Text color="white">{errors.submit}</Text>
            </View>)}
@@ -183,5 +183,12 @@ const styles = StyleSheet.create({
       width: 250,
       flexDirection: 'row',
       gap: 10,
-    }
+    },
+    submitErrorRow: {
+      width: 250,
+      flexDirection: 'row',
+      gap: 10,
+      marginTop: 20,
+      justifyContent: 'center'
+  }
 });

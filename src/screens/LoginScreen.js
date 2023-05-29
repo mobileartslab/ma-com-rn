@@ -6,7 +6,7 @@ import Images from '../../assets/images'
 import * as ValidationConstants from '../constants/validation'
 import {INIT, LOGIN} from "../state/action_types";
 import {action} from "../state/actions";
-import {STATUS_ACTIVE, STATUS_AUTHENTICATED, STATUS_NOT_FOUND} from "../constants/constants";
+import {STATUS_ACTIVE, STATUS_AUTHENTICATED, STATUS_INVALID_PASSWORD, STATUS_NOT_FOUND} from "../constants/constants";
 
 export default function LoginScreen({ navigation }) {
   const app = useSelector((state) => state.app)
@@ -24,7 +24,7 @@ export default function LoginScreen({ navigation }) {
     if (status === STATUS_AUTHENTICATED) {
       navigation.navigate('Main')
     }
-    else if (status === STATUS_NOT_FOUND) {
+    else if (status === STATUS_NOT_FOUND || status === STATUS_INVALID_PASSWORD) {
       errors.submit = 'Invalid Login'
       const newErrors = errors
       setErrors({ ...errors, ...newErrors })

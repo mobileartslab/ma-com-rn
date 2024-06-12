@@ -13,4 +13,4 @@ export const STATUS_ACTIVATION_CODE_EXPIRED = -6
 export const STATUS_ACTIVATION_CODE_ALREADY_USED = -7
 
 // export const API_URL = 'http://localhost:8000/api'
-export const API_URL = 'http://192.168.86.29:8000/api'
+export const API_URL = 'http://192.168.86.250:8000/api'
